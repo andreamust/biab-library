@@ -1,43 +1,15 @@
-# cmake_example for pybind11
+# Band-in-a-Box Converter Library
 
-[![Gitter][gitter-badge]][gitter-link]
+A [pybind11](https://github.com/pybind/pybind11) module built with a
+CMake-based build system for converting Band-in-a-Box files.
 
-|      CI              | status |
-|----------------------|--------|
-| MSVC 2015            | [![AppVeyor][appveyor-badge]][appveyor-link] |
-| conda.recipe         | [![Conda Actions Status][actions-conda-badge]][actions-conda-link] |
-| pip builds           | [![Pip Actions Status][actions-pip-badge]][actions-pip-link] |
-| [`cibuildwheel`][]   | [![Wheels Actions Status][actions-wheels-badge]][actions-wheels-link] |
-
-[gitter-badge]:            https://badges.gitter.im/pybind/Lobby.svg
-[gitter-link]:             https://gitter.im/pybind/Lobby
-[actions-badge]:           https://github.com/pybind/cmake_example/workflows/Tests/badge.svg
-[actions-conda-link]:      https://github.com/pybind/cmake_example/actions?query=workflow%3A%22Conda
-[actions-conda-badge]:     https://github.com/pybind/cmake_example/workflows/Conda/badge.svg
-[actions-pip-link]:        https://github.com/pybind/cmake_example/actions?query=workflow%3A%22Pip
-[actions-pip-badge]:       https://github.com/pybind/cmake_example/workflows/Pip/badge.svg
-[actions-wheels-link]:     https://github.com/pybind/cmake_example/actions?query=workflow%3AWheels
-[actions-wheels-badge]:    https://github.com/pybind/cmake_example/workflows/Wheels/badge.svg
-[appveyor-link]:           https://ci.appveyor.com/project/dean0x7d/cmake-example/branch/master
-[appveyor-badge]:          https://ci.appveyor.com/api/projects/status/57nnxfm4subeug43/branch/master?svg=true
-
-An example [pybind11](https://github.com/pybind/pybind11) module built with a
-CMake-based build system. This is useful for C++ codebases that have an
-existing CMake project structure. This is in many cases superseded by
-[`scikit_build_example`](https://github.com/pybind/scikit_build_example), which uses
-[scikit-build][], a tool from the makers of CMake designed to allow Python
-packages to be driven from CMake. However, there are still cases where you
-might want full control over the CMake run; and both of these approaches have
-some trade-offs not present in a pure setuptools build (see
-[`python_example`](https://github.com/pybind/python_example)). Python 3.6+ required;
-see the commit history for older versions of Python.
+The C++ source code has been provided by [Andrew Choi](https://sixthhappiness.github.io/articles/chart-translate/index.html), to whom all credits must be given.
 
 ## Prerequisites
 
-* A compiler with C++11 support
-* Pip 10+ or CMake >= 3.4 (or 3.8+ on Windows, which was the first version to support VS 2015)
-* Ninja or Pip 10+
-
+- A compiler with C++11 support
+- Pip 10+ or CMake >= 3.4 (or 3.8+ on Windows, which was the first version to support VS 2015)
+- Ninja or Pip 10+
 
 ## Installation
 
@@ -45,42 +17,47 @@ Just clone this repository and pip install. Note the `--recursive` option which 
 needed for the pybind11 submodule:
 
 ```bash
-git clone --recursive https://github.com/pybind/cmake_example.git
-pip install ./cmake_example
+git clone --recursive https://github.com/pybind/biab_library.git
+pip install ./biab_library  # Note that this command must be run in the root directory
 ```
 
 With the `setup.py` file included in this example, the `pip install` command will
 invoke CMake and build the pybind11 module as specified in `CMakeLists.txt`.
 
-
-
-## Building the documentation
-
-Documentation for the example project is generated using Sphinx. Sphinx has the
-ability to automatically inspect the signatures and documentation strings in
-the extension module to generate beautiful documentation in a variety formats.
-The following command generates HTML-based reference documentation; for other
-formats please refer to the Sphinx manual:
-
- - `cd cmake_example/docs`
- - `make html`
-
-
-## License
-
-Pybind11 is provided under a BSD-style license that can be found in the LICENSE
-file. By using, distributing, or contributing to this project, you agree to the
-terms and conditions of this license.
-
-
-## Test call
+## Run the Python Code
 
 ```python
-import cmake_example
-cmake_example.add(1, 2)
+import baib_converter
+biab_converter.biab("path_to_the_biab_file")
 ```
 
-[`cibuildwheel`]:          https://cibuildwheel.readthedocs.io
-[FAQ]: http://pybind11.rtfd.io/en/latest/faq.html#working-with-ancient-visual-studio-2009-builds-on-windows
-[vs2015_runtime]: https://www.microsoft.com/en-us/download/details.aspx?id=48145
-[scikit-build]: https://scikit-build.readthedocs.io/en/latest/
+Which will led to an output of this shape:
+
+```
+Beat = 0 Duration = 8 chord = Ab
+Beat = 8 Duration = 8 chord = Ab7
+Beat = 16 Duration = 8 chord = Gb7b9
+Beat = 24 Duration = 8 chord = Ab7
+Beat = 32 Duration = 2 chord = Ab
+Beat = 34 Duration = 2 chord = Db
+Beat = 36 Duration = 2 chord = Bb7
+Beat = 38 Duration = 2 chord = Eb7b9
+Beat = 40 Duration = 4 chord = Ab
+Beat = 44 Duration = 4 chord = Db7b9
+Beat = 48 Duration = 8 chord = Ab
+Beat = 56 Duration = 8 chord = Ab7
+Beat = 64 Duration = 8 chord = Gb7b9
+Beat = 72 Duration = 8 chord = Ab7
+Beat = 80 Duration = 2 chord = Ab
+Beat = 82 Duration = 2 chord = Db
+Beat = 84 Duration = 2 chord = Bb7
+Beat = 86 Duration = 2 chord = Eb7b9
+Beat = 88 Duration = 4 chord = Ab
+Beat = 92 Duration = 4 chord = Db7b9
+Beat = 96 Duration = 4 chord = Ab
+
+Name = Adam's Apple - Wayne Shorter
+Meter = 4/4
+Key = Ab
+Tempo = 100
+```
