@@ -46,6 +46,8 @@ constant definitions.  */
 namespace py = pybind11;
 
 
+// namespace fs = std::filesystem;
+
 static const char *rootNames[] = {"C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B", "C#", "D#", "F#",
                                   "G#", "A#"};
 
@@ -243,9 +245,16 @@ int meterDenominator;
 std::string key;
 bool isMinor;
 int tempo;
+py::list py_list;
+
 
 void OutputChord(int beat, int duration, const std::string &chord) {
-    std::cout << "Beat = " << beat << " Duration = " << duration << " chord = " << chord << std::endl;
+    py::list chord_list;
+    chord_list.append(beat);
+    chord_list.append(duration);
+    chord_list.append(chord);
+    py_list.append(chord_list);
+    // std::cout << "Beat = " << beat << " Duration = " << duration << " chord = " << chord << std::endl;
 }
 
 std::string ChordName(unsigned char root, unsigned char type) {
@@ -428,11 +437,11 @@ void ReadBiaBFile(std::basic_string<char, std::char_traits<char>, std::allocator
     else
         ReadBiaBFileNewFormat(ifs);
 
-    std::cout << std::endl;
-    std::cout << "Name = " << name << std::endl;
-    std::cout << "Meter = " << meterNumerator << "/" << meterDenominator << std::endl;
-    std::cout << "Key = " << key << (isMinor ? "m" : "") << std::endl;
-    std::cout << "Tempo = " << tempo << std::endl;
+    // std::cout << std::endl;
+    // std::cout << "Name = " << name << std::endl;
+    // std::cout << "Meter = " << meterNumerator << "/" << meterDenominator << std::endl;
+    // std::cout << "Key = " << key << (isMinor ? "m" : "") << std::endl;
+    // std::cout << "Tempo = " << tempo << std::endl;
 }
 
 /*
@@ -440,7 +449,7 @@ void ReadBiaBFile(std::basic_string<char, std::char_traits<char>, std::allocator
 int main(int argc, char *argv[]) {
     int error = 0;
     int success = 0;
-    std::string path = "/Users/andreapoltronieri/Downloads/BiabInternetCorpus2014-06-04/allBiabData";
+    string path = "/Users/andreapoltronieri/Downloads/BiabInternetCorpus2014-06-04/allBiabData";
     for (const auto &entry: fs::directory_iterator(path)) {
         try {
             ReadBiaBFile(entry.path());
@@ -454,15 +463,26 @@ int main(int argc, char *argv[]) {
     }
 }*/
 
-int biab(std::string path) {
+
+/*
+void print(std::list<std::string> const &list)
+{
+    for (auto const &i: list) {
+        std::cout << i << std::endl;
+    }
+}*/
+
+py::list biab(std::string file_path) {
     try {
-        ReadBiaBFile(path);
-        return 0;
+        ReadBiaBFile(file_path);
+        // std::cout << "\n" << my_list.size() << std::endl;
     }
     catch (std::exception &e) {
         std::cout << "Exception: " << e.what() << std::endl;
-        return 1;
     }
+    PyThreadState* ts;
+
+    return py_list;
 }
 
 PYBIND11_MODULE(biab_converter, handle) {
