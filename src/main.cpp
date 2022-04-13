@@ -443,7 +443,7 @@ void OutputChord(int beat, int duration, const std::string &chord) {
     this_chord_list.append(beat);
     this_chord_list.append(duration);
     this_chord_list.append(chord);
-    py_list.append(this_chord_list);
+    chord_list.append(this_chord_list);
     // std::cout << "Beat = " << beat << " Duration = " << duration << " chord = " << chord << std::endl;
 }
 
