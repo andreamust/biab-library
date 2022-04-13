@@ -674,7 +674,7 @@ py::list biab_meta(std::string file_path) {
     catch (std::exception &e) {
         std::cout << "Exception: " << e.what() << std::endl;
     }
-    return meta_list
+    return meta_list;
 }
 
 
