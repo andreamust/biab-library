@@ -434,15 +434,16 @@ int meterDenominator;
 std::string key;
 bool isMinor;
 int tempo;
-py::list py_list;
+py::list chord_list;
+py:list meta_list;
 
 
 void OutputChord(int beat, int duration, const std::string &chord) {
-    py::list chord_list;
-    chord_list.append(beat);
-    chord_list.append(duration);
-    chord_list.append(chord);
-    py_list.append(chord_list);
+    py::list this_chord_list;
+    this_chord_list.append(beat);
+    this_chord_list.append(duration);
+    this_chord_list.append(chord);
+    py_list.append(this_chord_list);
     // std::cout << "Beat = " << beat << " Duration = " << duration << " chord = " << chord << std::endl;
 }
 
@@ -625,7 +626,11 @@ void ReadBiaBFile(std::basic_string<char, std::char_traits<char>, std::allocator
         ReadBiaBFileOldFormat(ifs);
     else
         ReadBiaBFileNewFormat(ifs);
-
+    meta_list.append(name);
+    meta_list.append(meterNumerator);
+    meta_list.append(meterDenominator);
+    meta_list.append(key);
+    meta_list.append(tempo);
     // std::cout << std::endl;
     // std::cout << "Name = " << name << std::endl;
     // std::cout << "Meter = " << meterNumerator << "/" << meterDenominator << std::endl;
@@ -661,7 +666,19 @@ void print(std::list<std::string> const &list)
     }
 }*/
 
-py::list biab(std::string file_path) {
+py:list biab_meta(std::string file_path) {
+    try {
+        ReadBiaBFile(file_path);
+        // std::cout << "\n" << my_list.size() << std::endl;
+    }
+    catch (std::exception &e) {
+        std::cout << "Exception: " << e.what() << std::endl;
+    }
+    return meta_list
+}
+
+
+py::list biab_chords(std::string file_path) {
     try {
         ReadBiaBFile(file_path);
         // std::cout << "\n" << my_list.size() << std::endl;
@@ -671,9 +688,10 @@ py::list biab(std::string file_path) {
     }
     PyThreadState* ts;
 
-    return py_list;
+    return chord_list;
 }
 
 PYBIND11_MODULE(biab_converter, handle) {
-    handle.def("biab", &biab);
+    handle.def("biab_chords", &biab_chords);
+    handle.def("biab_meta", &biab_meta);
 }
