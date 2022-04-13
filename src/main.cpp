@@ -435,7 +435,7 @@ std::string key;
 bool isMinor;
 int tempo;
 py::list chord_list;
-py:list meta_list;
+py::list meta_list;
 
 
 void OutputChord(int beat, int duration, const std::string &chord) {
@@ -666,7 +666,7 @@ void print(std::list<std::string> const &list)
     }
 }*/
 
-py:list biab_meta(std::string file_path) {
+py::list biab_meta(std::string file_path) {
     try {
         ReadBiaBFile(file_path);
         // std::cout << "\n" << my_list.size() << std::endl;

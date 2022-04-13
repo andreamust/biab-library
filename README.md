@@ -17,7 +17,7 @@ Just clone this repository and pip install. Note the `--recursive` option which 
 needed for the pybind11 submodule:
 
 ```bash
-git clone --recursive https://github.com/pybind/biab_library.git
+git clone --recursive https://github.com/andreamust/biab_library.git
 pip install ./biab_library  # Note that this command must be run in the root directory
 ```
 
