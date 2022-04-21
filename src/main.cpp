@@ -615,6 +615,7 @@ void ReadBiaBFileOldFormat(std::ifstream &ifs) {
     for (int i = 0; i < chorusLength * 4; i++)
         if (types[i] != 0)
             OutputChord(i, durations[i] * meterNumerator / meterDenominator, ChordName(roots[i], types[i]));
+    ifs.close();
 }
 
 void ReadBiaBFile(std::basic_string<char, std::char_traits<char>, std::allocator<char>> filename) {
