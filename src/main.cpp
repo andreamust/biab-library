@@ -553,6 +553,7 @@ void ReadBiaBFileNewFormat(std::ifstream &ifs) {
 
     std::string chord = ChordName(roots[numberOfChords - 1], types[numberOfChords - 1]);
     OutputChord(beats[numberOfChords - 1] * meterNumerator / meterDenominator, meterNumerator, chord);
+    ifs.close();
 }
 
 void ReadBiaBFileOldFormat(std::ifstream &ifs) {
@@ -636,6 +637,7 @@ void ReadBiaBFile(std::basic_string<char, std::char_traits<char>, std::allocator
     // std::cout << "Meter = " << meterNumerator << "/" << meterDenominator << std::endl;
     // std::cout << "Key = " << key << (isMinor ? "m" : "") << std::endl;
     // std::cout << "Tempo = " << tempo << std::endl;
+    ifs.close();
 }
 
 /*
