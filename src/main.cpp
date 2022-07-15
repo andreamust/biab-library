@@ -448,7 +448,7 @@ void ReadBiaBFile(std::basic_string<char, std::char_traits<char>, std::allocator
 //    std::cout << "Tempo = " << tempo << std::endl;
 }
 
-std::tuple<std::vector<std::string>, std::vector<std::vector<std::string>>> biab_meta(std::string file_path) {
+std::tuple<std::vector<std::string>, std::vector<std::vector<std::string>>> biab_data(std::string file_path) {
     try {
         ReadBiaBFile(file_path);
         // std::cout << "\n" << my_list.size() << std::endl;
@@ -462,5 +462,5 @@ std::tuple<std::vector<std::string>, std::vector<std::vector<std::string>>> biab
 
 PYBIND11_MODULE(biab_converter, handle) {
     // handle.def("biab_chords", &biab_chords);
-    handle.def("biab_meta", &biab_meta);
+    handle.def("biab_meta", &biab_data);
 }
