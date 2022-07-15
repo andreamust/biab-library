@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.4...3.18)
-project(cmake_example)
+project(biab_library)
 
 add_subdirectory(pybind11)
 pybind11_add_module(biab_converter src/main.cpp)

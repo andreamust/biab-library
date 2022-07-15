@@ -42,202 +42,12 @@ constant definitions.  */
 #include <sstream>
 #include <stdexcept>
 #include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
 
 namespace py = pybind11;
 
-
-// namespace fs = std::filesystem;
-
 static const char *rootNames[] = {"C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B", "C#", "D#", "F#",
                                   "G#", "A#"};
-
-static const char *typeNames[] = {
-        "",  /* 1 */
-        "Maj",  /* 2 */
-        "b5",  /* 3 */
-        "aug",  /* 4 */
-        "6",  /* 5 */
-        "Maj7",  /* 6 */
-        "Maj9",  /* 7 */
-        "Maj9#11",  /* 8 */
-        "Maj13#11",  /* 9 */
-        "Maj13",  /* 10 */
-        "Maj9(no 3)",  /* 11 */
-        "+",  /* 12 */
-        "Maj7#5",  /* 13 */
-        "69",  /* 14 */
-        "2",  /* 15 */
-        "m",  /* 16 */
-        "maug",  /* 17 */
-        "mMaj7",  /* 18 */
-        "m7",  /* 19 */
-        "m9",  /* 20 */
-        "m11",  /* 21 */
-        "m13",  /* 22 */
-        "m6",  /* 23 */
-        "m#5",  /* 24 */
-        "m7#5",  /* 25 */
-        "?",  /* 26 */
-        "?",  /* 27 */
-        "?",  /* 28 */
-        "?",  /* 29 */
-        "?",  /* 30 */
-        "?",  /* 31 */
-        "m7b5",  /* 32 */
-        "dim",  /* 33 */
-        "?",  /* 34 */
-        "?",  /* 35 */
-        "?",  /* 36 */
-        "?",  /* 37 */
-        "?",  /* 38 */
-        "?",  /* 39 */
-        "5",  /* 40 */
-        "?",  /* 41 */
-        "?",  /* 42 */
-        "?",  /* 43 */
-        "?",  /* 44 */
-        "?",  /* 45 */
-        "?",  /* 46 */
-        "?",  /* 47 */
-        "?",  /* 48 */
-        "?",  /* 49 */
-        "?",  /* 50 */
-        "?",  /* 51 */
-        "?",  /* 52 */
-        "?",  /* 53 */
-        "?",  /* 54 */
-        "?",  /* 55 */
-        "7+",  /* 56 */
-        "9+",  /* 57 */
-        "13+",  /* 58 */
-        "?",  /* 59 */
-        "?",  /* 60 */
-        "?",  /* 61 */
-        "?",  /* 62 */
-        "?",  /* 63 */
-        "7",  /* 64 */
-        "13",  /* 65 */
-        "7b13",  /* 66 */
-        "7#11",  /* 67 */
-        "13#11",  /* 68 */
-        "7#11b13",  /* 69 */
-        "9",  /* 70 */
-        "?",  /* 71 */
-        "9b13",  /* 72 */
-        "9#11",  /* 73 */
-        "13#11",  /* 74 */
-        "9#11b13",  /* 75 */
-        "7b9",  /* 76 */
-        "13b9",  /* 77 */
-        "7b9b13",  /* 78 */
-        "7b9#11",  /* 79 */
-        "13b9#11",  /* 80 */
-        "7b9#11b13",  /* 81 */
-        "7#9",  /* 82 */
-        "13#9",  /* 83 */
-        "7#9b13",  /* 84 */
-        "9#11",  /* 85 */
-        "13#9#11",  /* 86 */
-        "7#9#11b13",  /* 87 */
-        "7b5",  /* 88 */
-        "13b5",  /* 89 */
-        "7b5b13",  /* 90 */
-        "9b5",  /* 91 */
-        "9b5b13",  /* 92 */
-        "7b5b9",  /* 93 */
-        "13b5b9",  /* 94 */
-        "7b5b9b13",  /* 95 */
-        "7b5#9",  /* 96 */
-        "13b5#9",  /* 97 */
-        "7b5#9b13",  /* 98 */
-        "7#5",  /* 99 */
-        "13#5",  /* 100 */
-        "7#5#11",  /* 101 */
-        "13#5#11",  /* 102 */
-        "9#5",  /* 103 */
-        "9#5#11",  /* 104 */
-        "7#5b9",  /* 105 */
-        "13#5b9",  /* 106 */
-        "7#5b9#11",  /* 107 */
-        "13#5b9#11",  /* 108 */
-        "7#5#9",  /* 109 */
-        "13#5#9#11",  /* 110 */
-        "7#5#9#11",  /* 111 */
-        "13#5#9#11",  /* 112 */
-        "7alt",  /* 113 */
-        "?",  /* 114 */
-        "?",  /* 115 */
-        "?",  /* 116 */
-        "?",  /* 117 */
-        "?",  /* 118 */
-        "?",  /* 119 */
-        "?",  /* 120 */
-        "?",  /* 121 */
-        "?",  /* 122 */
-        "?",  /* 123 */
-        "?",  /* 124 */
-        "?",  /* 125 */
-        "?",  /* 126 */
-        "?",  /* 127 */
-        "7sus",  /* 128 */
-        "13sus",  /* 129 */
-        "7susb13",  /* 130 */
-        "7sus#11",  /* 131 */
-        "13sus#11",  /* 132 */
-        "7sus#11b13",  /* 133 */
-        "9sus",  /* 134 */
-        "?",  /* 135 */
-        "9susb13",  /* 136 */
-        "9sus#11",  /* 137 */
-        "13sus#11",  /* 138 */
-        "9sus#11b13",  /* 139 */
-        "7susb9",  /* 140 */
-        "13susb9",  /* 141 */
-        "7susb913",  /* 142 */
-        "7susb9#11",  /* 143 */
-        "13susb9#11",  /* 144 */
-        "7susb9#11b13",  /* 145 */
-        "7sus#9",  /* 146 */
-        "13sus#9",  /* 147 */
-        "7sus#9b13",  /* 148 */
-        "9sus#11",  /* 149 */
-        "13sus#9#11",  /* 150 */
-        "7sus#9#11b13",  /* 151 */
-        "7susb5",  /* 152 */
-        "13susb5",  /* 153 */
-        "7susb5b13",  /* 154 */
-        "9susb5",  /* 155 */
-        "9susb5b13",  /* 156 */
-        "7susb5b9",  /* 157 */
-        "13susb5b9",  /* 158 */
-        "7susb5b9b13",  /* 159 */
-        "7susb5#9",  /* 160 */
-        "13susb5#9",  /* 161 */
-        "7susb5#9b13",  /* 162 */
-        "7sus#5",  /* 163 */
-        "13sus#5",  /* 164 */
-        "7sus#5#11",  /* 165 */
-        "13sus#5#11",  /* 166 */
-        "9sus#5",  /* 167 */
-        "9sus#5#11",  /* 168 */
-        "7sus#5b9",  /* 169 */
-        "13sus#5b9",  /* 170 */
-        "7sus#5b9#11",  /* 171 */
-        "13sus#5b9#11",  /* 172 */
-        "7sus#5#9",  /* 173 */
-        "13sus#5#9#11",  /* 174 */
-        "7sus#5#9#11",  /* 175 */
-        "13sus#5#9#11",  /* 176 */
-        "4",  /* 177 */
-        "?",  /* 178 */
-        "?",  /* 179 */
-        "?",  /* 180 */
-        "?",  /* 181 */
-        "?",  /* 182 */
-        "?",  /* 183 */
-        "sus",  /* 184 */
-        /* no chord names above 185 */
-};
 
 
 static const char *harteNames[] = {
@@ -434,16 +244,15 @@ int meterDenominator;
 std::string key;
 bool isMinor;
 int tempo;
-py::list chord_list;
-py::list meta_list;
-
+std::vector<std::vector<std::string>> chord_list;
+std::vector<std::string> meta_list;
 
 void OutputChord(int beat, int duration, const std::string &chord) {
-    py::list this_chord_list;
-    this_chord_list.append(beat);
-    this_chord_list.append(duration);
-    this_chord_list.append(chord);
-    chord_list.append(this_chord_list);
+    std::vector<std::string> this_chord_list;
+    this_chord_list.push_back(std::to_string(beat));
+    this_chord_list.push_back(std::to_string(duration));
+    this_chord_list.push_back(chord);
+    chord_list.push_back(this_chord_list);
     // std::cout << "Beat = " << beat << " Duration = " << duration << " chord = " << chord << std::endl;
 }
 
@@ -553,8 +362,8 @@ void ReadBiaBFileNewFormat(std::ifstream &ifs) {
 
     std::string chord = ChordName(roots[numberOfChords - 1], types[numberOfChords - 1]);
     OutputChord(beats[numberOfChords - 1] * meterNumerator / meterDenominator, meterNumerator, chord);
-    ifs.close();
 }
+
 
 void ReadBiaBFileOldFormat(std::ifstream &ifs) {
     unsigned char nameLen = ifs.get();
@@ -615,7 +424,6 @@ void ReadBiaBFileOldFormat(std::ifstream &ifs) {
     for (int i = 0; i < chorusLength * 4; i++)
         if (types[i] != 0)
             OutputChord(i, durations[i] * meterNumerator / meterDenominator, ChordName(roots[i], types[i]));
-    ifs.close();
 }
 
 void ReadBiaBFile(std::basic_string<char, std::char_traits<char>, std::allocator<char>> filename) {
@@ -628,48 +436,19 @@ void ReadBiaBFile(std::basic_string<char, std::char_traits<char>, std::allocator
         ReadBiaBFileOldFormat(ifs);
     else
         ReadBiaBFileNewFormat(ifs);
-    meta_list.append(name);
-    meta_list.append(meterNumerator);
-    meta_list.append(meterDenominator);
-    meta_list.append(key);
-    meta_list.append(tempo);
-    // std::cout << std::endl;
-    // std::cout << "Name = " << name << std::endl;
-    // std::cout << "Meter = " << meterNumerator << "/" << meterDenominator << std::endl;
-    // std::cout << "Key = " << key << (isMinor ? "m" : "") << std::endl;
-    // std::cout << "Tempo = " << tempo << std::endl;
-    ifs.close();
+    meta_list.push_back(name);
+    meta_list.push_back(std::to_string(meterNumerator));
+    meta_list.push_back(std::to_string(meterDenominator));
+    meta_list.push_back(key);
+    meta_list.push_back(std::to_string(tempo));
+//    std::cout << std::endl;
+//    std::cout << "Name = " << name << std::endl;
+//    std::cout << "Meter = " << meterNumerator << "/" << meterDenominator << std::endl;
+//    std::cout << "Key = " << key << (isMinor ? "m" : "") << std::endl;
+//    std::cout << "Tempo = " << tempo << std::endl;
 }
 
-/*
- * Test iterating over all the files of the dataset
-int main(int argc, char *argv[]) {
-    int error = 0;
-    int success = 0;
-    string path = "/Users/andreapoltronieri/Downloads/BiabInternetCorpus2014-06-04/allBiabData";
-    for (const auto &entry: fs::directory_iterator(path)) {
-        try {
-            ReadBiaBFile(entry.path());
-            success++;
-        }
-        catch (std::exception &e) {
-            error++;
-            std::cout << "Exception: " << e.what() << std::endl;
-        }
-        std::cout << "Errors: " << (error) << "\nSuccess: " << success << std::endl;
-    }
-}*/
-
-
-/*
-void print(std::list<std::string> const &list)
-{
-    for (auto const &i: list) {
-        std::cout << i << std::endl;
-    }
-}*/
-
-py::list biab_meta(std::string file_path) {
+std::tuple<std::vector<std::string>, std::vector<std::vector<std::string>>> biab_meta(std::string file_path) {
     try {
         ReadBiaBFile(file_path);
         // std::cout << "\n" << my_list.size() << std::endl;
@@ -677,24 +456,11 @@ py::list biab_meta(std::string file_path) {
     catch (std::exception &e) {
         std::cout << "Exception: " << e.what() << std::endl;
     }
-    return meta_list;
-}
 
-
-py::list biab_chords(std::string file_path) {
-    try {
-        ReadBiaBFile(file_path);
-        // std::cout << "\n" << my_list.size() << std::endl;
-    }
-    catch (std::exception &e) {
-        std::cout << "Exception: " << e.what() << std::endl;
-    }
-    PyThreadState* ts;
-
-    return chord_list;
+    return {meta_list, chord_list};
 }
 
 PYBIND11_MODULE(biab_converter, handle) {
-    handle.def("biab_chords", &biab_chords);
+    // handle.def("biab_chords", &biab_chords);
     handle.def("biab_meta", &biab_meta);
 }
