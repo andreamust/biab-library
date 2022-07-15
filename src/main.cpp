@@ -46,8 +46,9 @@ constant definitions.  */
 
 namespace py = pybind11;
 
-static const char *rootNames[] = {"C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B", "C#", "D#", "F#",
-                                  "G#", "A#"};
+static const char *rootNames[] = {"C", "Db", "D", "Eb", "E", "F",
+                                  "Gb", "G", "Ab", "A", "Bb", "B",
+                                  "C#", "D#", "F#", "G#", "A#"};
 
 
 static const char *harteNames[] = {
@@ -423,7 +424,8 @@ void ReadBiaBFileOldFormat(std::ifstream &ifs) {
 
     for (int i = 0; i < chorusLength * 4; i++)
         if (types[i] != 0)
-            OutputChord(i, durations[i] * meterNumerator / meterDenominator, ChordName(roots[i], types[i]));
+            OutputChord(i, durations[i] * meterNumerator / meterDenominator,
+                        ChordName(roots[i], types[i]));
 }
 
 void ReadBiaBFile(std::basic_string<char, std::char_traits<char>, std::allocator<char>> filename) {
@@ -461,6 +463,8 @@ std::tuple<std::vector<std::string>, std::vector<std::vector<std::string>>> biab
 }
 
 PYBIND11_MODULE(biab_converter, handle) {
-    // handle.def("biab_chords", &biab_chords);
+    handle.doc() = "Function for opening and managing Band-in-a-Box files. The function takes as input a file path of"
+                   "a BIAB file and returns a tuple of list, where the first list contains metadata about the track, "
+                   "while the second contains chords information.";
     handle.def("biab_meta", &biab_data);
 }
