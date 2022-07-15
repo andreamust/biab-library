@@ -27,7 +27,7 @@ invoke CMake and build the pybind11 module as specified in `CMakeLists.txt`.
 ## Run the Python Code
 
 ```python
-import baib_converter
+import biab_converter
 biab_converter.biab("path_to_the_biab_file")
 ```
 
