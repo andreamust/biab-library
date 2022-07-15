@@ -461,6 +461,8 @@ std::tuple<std::vector<std::string>, std::vector<std::vector<std::string>>> biab
 }
 
 PYBIND11_MODULE(biab_converter, handle) {
-    // handle.def("biab_chords", &biab_chords);
+    handle.doc() = "Function for opening and managing Band-in-a-Box files. The function takes as input a file path of"
+                   "a BIAB file and returns a tuple of list, where the first list contains metadata about the track, "
+                   "while the second contains chords information.";
     handle.def("biab_meta", &biab_data);
 }
