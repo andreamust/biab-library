@@ -1,4 +1,4 @@
-import biab-library as m
+import biab_library as m
 
 
 def test_main():
