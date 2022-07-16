@@ -248,14 +248,16 @@ int meterDenominator;
 std::string key;
 bool isMinor;
 int tempo;
+std::vector<std::vector<std::string>> chord_list{};
+std::vector<std::string> meta_list{};
 
-std::vector<std::string> OutputChord(int beat, int duration, const std::string &chord) {
+
+void OutputChord(int beat, int duration, const std::string &chord) {
     std::vector<std::string> this_chord_list;
     this_chord_list.push_back(std::to_string(beat));
     this_chord_list.push_back(std::to_string(duration));
     this_chord_list.push_back(chord);
-    //chord_list.push_back(this_chord_list);
-    return this_chord_list;
+    chord_list.push_back(this_chord_list);
     // std::cout << "Beat = " << beat << " Duration = " << duration << " chord = " << chord << std::endl;
 }
 
@@ -431,8 +433,8 @@ void ReadBiaBFileOldFormat(std::ifstream &ifs) {
 }
 
 void ReadBiaBFile(std::basic_string<char, std::char_traits<char>, std::allocator<char>> filename) {
-    std::vector<std::vector<std::string>> chord_list;
-    std::vector<std::string> meta_list;
+    chord_list = {};
+    meta_list = {};
     std::ifstream ifs(filename);
     if (!ifs)
         throw std::runtime_error("Cannot open file to initialize chord sequence");
@@ -455,15 +457,15 @@ void ReadBiaBFile(std::basic_string<char, std::char_traits<char>, std::allocator
 }
 
 std::tuple<std::vector<std::string>, std::vector<std::vector<std::string>>> biab_data(std::string file_path) {
-    try {
-        ReadBiaBFile(file_path);
-        // std::cout << "\n" << my_list.size() << std::endl;
-    }
-    catch (std::exception &e) {
-        std::cout << "Exception: " << e.what() << std::endl;
-    }
+try {
+ReadBiaBFile(file_path);
+// std::cout << "\n" << my_list.size() << std::endl;
+}
+catch (std::exception &e) {
+std::cout << "Exception: " << e.what() << std::endl;
+}
 
-    return {meta_list, chord_list};
+return {meta_list, chord_list};
 }
 
 std::vector<std::vector<std::string>> biab_chords(std::string file_path) {
@@ -485,22 +487,22 @@ std::vector<std::string> biab_meta(std::string file_path) {
     }
     catch (std::exception &e) {
         std::cout << "Exception: " << e.what() << std::endl;
-}
+    }
 
     return meta_list;
 }
 
 PYBIND11_MODULE(biab, handle) {
-    handle.doc() = "Function for opening and managing Band-in-a-Box files. The function takes as input a file path of"
-                   "a BIAB file and returns a tuple of list, where the first list contains metadata about the track, "
-                   "while the second contains chords information.";
-    handle.def("biab_data", &biab_data, R"pbdoc(
+handle.doc() = "Function for opening and managing Band-in-a-Box files. The function takes as input a file path of"
+               "a BIAB file and returns a tuple of list, where the first list contains metadata about the track, "
+               "while the second contains chords information.";
+handle.def("biab_data", &biab_data, R"pbdoc(
         Returns all available data from the BIAB file, including metadata and chord annotation.
     )pbdoc");
-    handle.def("biab_meta", &biab_meta, R"pbdoc(
+handle.def("biab_meta", &biab_meta, R"pbdoc(
         Returns metadata information from the BIAB file.
     )pbdoc");
-    handle.def("biab_chords", &biab_chords, R"pbdoc(
+handle.def("biab_chords", &biab_chords, R"pbdoc(
         Returns chord annotations from the BIAB file.
     )pbdoc");
 #ifdef VERSION_INFO
