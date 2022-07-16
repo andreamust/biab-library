@@ -120,13 +120,13 @@ class CMakeBuild(build_ext):
 # The information here can also be placed in setup.cfg - better separation of
 # logic and declaration, and simpler if you include description/version in a file.
 setup(
-    name="biab_converter",
-    version="0.0.1",
+    name="biab",
+    version="0.1.0",
     author="Andrea Poltronieri",
     author_email="andrea.poltronieri21@gmail.com",
     description="A converter for band-in-a-box files",
     long_description="",
-    ext_modules=[CMakeExtension("biab_converter")],
+    ext_modules=[CMakeExtension("biab")],
     cmdclass={"build_ext": CMakeBuild},
     zip_safe=False,
     extras_require={"test": ["pytest>=6.0"]},

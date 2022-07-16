@@ -44,6 +44,9 @@ constant definitions.  */
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 
+#define STRINGIFY(x) #x
+#define MACRO_STRINGIFY(x) STRINGIFY(x)
+
 namespace py = pybind11;
 
 static const char *rootNames[] = {"C", "Db", "D", "Eb", "E", "F",
@@ -462,9 +465,46 @@ std::tuple<std::vector<std::string>, std::vector<std::vector<std::string>>> biab
     return {meta_list, chord_list};
 }
 
+std::vector<std::vector<std::string>> biab_chords(std::string file_path) {
+    try {
+        ReadBiaBFile(file_path);
+        // std::cout << "\n" << my_list.size() << std::endl;
+    }
+    catch (std::exception &e) {
+        std::cout << "Exception: " << e.what() << std::endl;
+    }
+
+    return chord_list;
+}
+
+std::vector<std::string> biab_meta(std::string file_path) {
+    try {
+        ReadBiaBFile(file_path);
+        // std::cout << "\n" << my_list.size() << std::endl;
+    }
+    catch (std::exception &e) {
+        std::cout << "Exception: " << e.what() << std::endl;
+}
+
+    return meta_list
+}
+
 PYBIND11_MODULE(biab_converter, handle) {
     handle.doc() = "Function for opening and managing Band-in-a-Box files. The function takes as input a file path of"
                    "a BIAB file and returns a tuple of list, where the first list contains metadata about the track, "
                    "while the second contains chords information.";
-    handle.def("biab_meta", &biab_data);
+    handle.def("biab_data", &biab_data, R"pbdoc(
+        Returns all available data from the BIAB file, including metadata and chord annotation.
+    )pbdoc");
+    handle.def("biab_meta", &biab_meta, R"pbdoc(
+        Returns metadata information from the BIAB file.
+    )pbdoc");
+    handle.def("biab_chords", &biab_chords, R"pbdoc(
+        Returns chord annotations from the BIAB file.
+    )pbdoc");
+#ifdef VERSION_INFO
+m.attr("__version__") = MACRO_STRINGIFY(VERSION_INFO);
+#else
+m.attr("__version__") = "dev";
+#endif
 }
