@@ -1,4 +1,6 @@
-import biab_library as m
+import importlib
+
+m = importlib.import_module("biab-library")
 
 
 def test_main():
