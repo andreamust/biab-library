@@ -248,8 +248,6 @@ int meterDenominator;
 std::string key;
 bool isMinor;
 int tempo;
-std::vector<std::vector<std::string>> chord_list;
-std::vector<std::string> meta_list;
 
 void OutputChord(int beat, int duration, const std::string &chord) {
     std::vector<std::string> this_chord_list;
@@ -370,6 +368,8 @@ void ReadBiaBFileNewFormat(std::ifstream &ifs) {
 
 
 void ReadBiaBFileOldFormat(std::ifstream &ifs) {
+    std::vector<std::vector<std::string>> chord_list;
+    std::vector<std::string> meta_list;
     unsigned char nameLen = ifs.get();
     char nameChars[nameLen];
     ifs.read(nameChars, nameLen);
