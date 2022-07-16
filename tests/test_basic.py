@@ -1,4 +1,4 @@
-import cmake_example as m
+import biab-library as m
 
 
 def test_main():
