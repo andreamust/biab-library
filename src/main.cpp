@@ -249,12 +249,13 @@ std::string key;
 bool isMinor;
 int tempo;
 
-void OutputChord(int beat, int duration, const std::string &chord) {
+std::vector<std::string> OutputChord(int beat, int duration, const std::string &chord) {
     std::vector<std::string> this_chord_list;
     this_chord_list.push_back(std::to_string(beat));
     this_chord_list.push_back(std::to_string(duration));
     this_chord_list.push_back(chord);
-    chord_list.push_back(this_chord_list);
+    //chord_list.push_back(this_chord_list);
+    return this_chord_list;
     // std::cout << "Beat = " << beat << " Duration = " << duration << " chord = " << chord << std::endl;
 }
 
@@ -368,8 +369,6 @@ void ReadBiaBFileNewFormat(std::ifstream &ifs) {
 
 
 void ReadBiaBFileOldFormat(std::ifstream &ifs) {
-    std::vector<std::vector<std::string>> chord_list;
-    std::vector<std::string> meta_list;
     unsigned char nameLen = ifs.get();
     char nameChars[nameLen];
     ifs.read(nameChars, nameLen);
@@ -432,6 +431,8 @@ void ReadBiaBFileOldFormat(std::ifstream &ifs) {
 }
 
 void ReadBiaBFile(std::basic_string<char, std::char_traits<char>, std::allocator<char>> filename) {
+    std::vector<std::vector<std::string>> chord_list;
+    std::vector<std::string> meta_list;
     std::ifstream ifs(filename);
     if (!ifs)
         throw std::runtime_error("Cannot open file to initialize chord sequence");
