@@ -486,10 +486,10 @@ std::vector<std::string> biab_meta(std::string file_path) {
         std::cout << "Exception: " << e.what() << std::endl;
 }
 
-    return meta_list
+    return meta_list;
 }
 
-PYBIND11_MODULE(biab_converter, handle) {
+PYBIND11_MODULE(biab, handle) {
     handle.doc() = "Function for opening and managing Band-in-a-Box files. The function takes as input a file path of"
                    "a BIAB file and returns a tuple of list, where the first list contains metadata about the track, "
                    "while the second contains chords information.";
@@ -503,8 +503,8 @@ PYBIND11_MODULE(biab_converter, handle) {
         Returns chord annotations from the BIAB file.
     )pbdoc");
 #ifdef VERSION_INFO
-m.attr("__version__") = MACRO_STRINGIFY(VERSION_INFO);
+handle.attr("__version__") = MACRO_STRINGIFY(VERSION_INFO);
 #else
-m.attr("__version__") = "dev";
+handle.attr("__version__") = "dev";
 #endif
 }
