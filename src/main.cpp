@@ -486,7 +486,7 @@ std::vector<std::string> biab_meta(std::string file_path) {
         std::cout << "Exception: " << e.what() << std::endl;
 }
 
-    return meta_list
+    return meta_list;
 }
 
 PYBIND11_MODULE(biab_converter, handle) {
