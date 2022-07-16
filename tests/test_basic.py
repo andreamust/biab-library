@@ -1,7 +1,4 @@
-import importlib
-
-m = importlib.import_module("biab-library")
-
+import biab_converter as m
 
 def test_main():
     assert m.__version__ == "0.0.1"
