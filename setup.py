@@ -27,11 +27,11 @@ ext_modules = [
 setup(
     name="python_example",
     version=__version__,
-    author="Sylvain Corlay",
-    author_email="sylvain.corlay@gmail.com",
-    url="https://github.com/pybind/python_example",
-    description="A test project using pybind11",
-    long_description="",
+    author="Andrea Poltronieri",
+    author_email="andrea.poltronieri21@gmail.com",
+    url="https://github.com/andreamust/biab",
+    description="A converter for band-in-a-box files",
+    long_description="A tool for exploring and processing Band-in-a-Box files",
     ext_modules=ext_modules,
     extras_require={"test": "pytest"},
     # Currently, build_ext only provides an optional "highest supported C++
