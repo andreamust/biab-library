@@ -25,7 +25,7 @@ ext_modules = [
 ]
 
 setup(
-    name="python_example",
+    name="biab-library",
     version=__version__,
     author="Andrea Poltronieri",
     author_email="andrea.poltronieri21@gmail.com",
