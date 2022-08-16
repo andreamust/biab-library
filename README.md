@@ -1,7 +1,6 @@
 python_example
 ==============
 
-[![Gitter][gitter-badge]][gitter-link]
 
 |      CI              | status |
 |----------------------|--------|
@@ -68,7 +67,7 @@ Test call
 ---------
 
 ```python
-import python_example
+import biab_library
 python_example.add(1, 2)
 ```
 
