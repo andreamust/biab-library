@@ -1,48 +1,46 @@
-python_example
+BIAB Library
 ==============
 
 
-|      CI              | status |
-|----------------------|--------|
-| Linux/macOS Travis   | [![Travis-CI][travis-badge]][travis-link] |
-| MSVC 2015            | [![AppVeyor][appveyor-badge]][appveyor-link] |
-| conda.recipe         | [![Conda Actions Status][actions-conda-badge]][actions-conda-link] |
-| pip builds           | [![Pip Actions Status][actions-pip-badge]][actions-pip-link] |
-| [`cibuildwheel`][]   | [![Wheels Actions Status][actions-wheels-badge]][actions-wheels-link] |
+A [pybind11](https://github.com/pybind/pybind11) module built with a
+CMake-based build system for converting Band-in-a-Box files.
 
-[gitter-badge]:            https://badges.gitter.im/pybind/Lobby.svg
-[gitter-link]:             https://gitter.im/pybind/Lobby
-[actions-badge]:           https://github.com/pybind/python_example/workflows/Tests/badge.svg
-[actions-conda-link]:      https://github.com/pybind/python_example/actions?query=workflow%3A%22Conda
-[actions-conda-badge]:     https://github.com/pybind/python_example/workflows/Conda/badge.svg
-[actions-pip-link]:        https://github.com/pybind/python_example/actions?query=workflow%3A%22Pip
-[actions-pip-badge]:       https://github.com/pybind/python_example/workflows/Pip/badge.svg
-[actions-wheels-link]:     https://github.com/pybind/python_example/actions?query=workflow%3AWheels
-[actions-wheels-badge]:    https://github.com/pybind/python_example/workflows/Wheels/badge.svg
-[travis-link]:             https://travis-ci.org/pybind/python_example
-[travis-badge]:            https://travis-ci.org/pybind/python_example.svg?branch=master&status=passed
-[appveyor-link]:           https://ci.appveyor.com/project/wjakob/python-example
-<!-- TODO: get a real badge link for appveyor -->
-[appveyor-badge]:          https://travis-ci.org/pybind/python_example.svg?branch=master&status=passed
-
-An example project built with [pybind11](https://github.com/pybind/pybind11).
-This requires Python 3.6+; for older versions of Python, check the commit
-history.
+The C++ source code has been provided by [Andrew Choi](https://sixthhappiness.github.io/articles/chart-translate/index.html), to whom all credits must be given.
 
 Installation
 ------------
 
- - clone this repository
- - `pip install ./python_example`
+## Installation via pip
 
-CI Examples
+You can install the library using pip, by running the command:
+
+```commandline
+pip install biab-library
+```
+You can also find the PyPi documentation at [this link](https://pypi.org/project/biab-library/).
+
+## Local installation
+
+For installing the library locally, you can follow these steps:
+
+ - clone this repository running `git clone https://github.com/andreamust/biab-library.git`
+ - run `pip install ./biab-library`
+
+Usage
 -----------
+The library implements three different methods for accessing the data stored in the Band-in-a-Box files. 
 
-There are examples for CI in `.github/workflows`. A simple way to produces
-binary "wheels" for all platforms is illustrated in the "wheels.yml" file,
-using [`cibuildwheel`][]. You can also see a basic recipe for building and
-testing in `pip.yml`, and `conda.yml` has an example of a conda recipe build.
+The methods are as follows:
+* `biab_data`: given a Band-in-a-Box file path, it returns all the data stored in the file;
+* `biab_meta`: given a Band-in-a-Box file path, it returns the file metadata;
+* `biab_chords`: given a Band-in-a-Box file path, it returns all the chords contained in the file.
 
+
+
+Tests
+-----
+
+TBD
 
 Building the documentation
 --------------------------
@@ -62,13 +60,3 @@ License
 pybind11 is provided under a BSD-style license that can be found in the LICENSE
 file. By using, distributing, or contributing to this project, you agree to the
 terms and conditions of this license.
-
-Test call
----------
-
-```python
-import biab_library
-python_example.add(1, 2)
-```
-
-[`cibuildwheel`]:          https://cibuildwheel.readthedocs.io
