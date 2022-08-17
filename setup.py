@@ -2,7 +2,7 @@
 from pybind11.setup_helpers import Pybind11Extension, build_ext
 from setuptools import setup
 
-__version__ = "0.2.0"
+__version__ = "0.4.0"
 
 # The main interface is through Pybind11Extension.
 # * You can add cxx_std=11/14/17, and then build_ext can be removed.
@@ -14,7 +14,7 @@ __version__ = "0.2.0"
 #   reproducible builds (https://github.com/pybind/python_example/pull/53)
 
 ext_modules = [
-    Pybind11Extension("python_example",
+    Pybind11Extension("biab",
                       ["src/main.cpp"],
                       # Example: passing in the version to the compiled code
                       define_macros=[('VERSION_INFO', __version__)],
