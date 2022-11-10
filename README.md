@@ -64,7 +64,7 @@ The output of the `biab_data()` method consists of a tuple which is the combinat
 
 
 Below, you can find an example of a `biab_data()` method call:
-```json
+```
 (['April In Paris', '4', '4', 'C', '130'], 
     [
         ['0', '4', 'F:min'], 
